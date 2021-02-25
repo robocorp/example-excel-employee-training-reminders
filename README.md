@@ -156,6 +156,34 @@ The `emailer.py` implements the email integration. The [`RPA.Email.ImapSmtp`](ht
 
 The [`RPA.Robocloud.Secrets`](https://robocorp.com/docs/libraries/rpa-framework/rpa-robocloud-secrets) library handles fetching the email credentials in a secure way.
 
+## Configuration
+
+You need to provide your Gmail credentials so that the robot can log in.
+
+> See [How to work with email using Gmail and RPA Framework](https://robocorp.com/docs/development-guide/email/sending-emails-with-gmail-smtp) for how to configure Gmail for robot access.
+
+### Create a `vault.json` file for the credentials
+
+Create a new file: `/Users/<username>/vault.json`
+
+```json
+{
+  "emailCredentials": {
+    "username": "YOUR-GMAIL-USERNAME",
+    "password": "YOUR-GMAIL-APP-SPECIFIC-PASSWORD"
+  }
+}
+```
+
+### Point `devdata/env.json` to your `vault.json` file
+
+```json
+{
+  "RPA_SECRET_MANAGER": "RPA.Robocloud.Secrets.FileSecrets",
+  "RPA_SECRET_FILE": "/Users/<username>/vault.json"
+}
+```
+
 ## I want to learn more!
 
 Visit [Robocorp docs](https://robocorp.com/docs/) to learn more about developing Python robots to automate your processes!

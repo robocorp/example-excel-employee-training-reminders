@@ -41,11 +41,11 @@ def send_reminders(employees, trainings):
 def get_not_completed_trainings(employee, trainings):
     trainings_copy = tables.copy_table(trainings)
     training_names = set(tables.get_table_column(
-        trainings_copy, "Training name", as_list=True))
+        trainings_copy, "Training name"))
     tables.filter_table_by_column(
         trainings_copy, "Person ID", "==", employee["Person ID"])
     completed_trainings = set(tables.get_table_column(
-        trainings_copy, "Training name", as_list=True))
+        trainings_copy, "Training name"))
     not_completed_trainings = training_names.difference(completed_trainings)
     return not_completed_trainings
 

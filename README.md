@@ -132,15 +132,13 @@ The robot uses the [`RPA.Tables`](https://robocorp.com/docs/libraries/rpa-framew
 
 ```py
 from RPA.Email.ImapSmtp import ImapSmtp
-from RPA.Robocloud.Secrets import Secrets
-
-secrets = Secrets()
-secret = secrets.get_secret("emailCredentials")
-gmail_account = secret["username"]
-gmail_password = secret["password"]
+from RPA.Robocorp.Vault import Vault
 
 
 def send_email(recipient, subject, body):
+    secret = Vault().get_secret("emailCredentials")
+    gmail_account = secret["username"]
+    gmail_password = secret["password"]
     mail = ImapSmtp(smtp_server="smtp.gmail.com", smtp_port=587)
     mail.authorize(account=gmail_account, password=gmail_password)
     mail.send_message(
@@ -154,7 +152,7 @@ def send_email(recipient, subject, body):
 
 The `emailer.py` implements the email integration. The [`RPA.Email.ImapSmtp`](https://robocorp.com/docs/libraries/rpa-framework/rpa-email-imapsmtp) library provides the emailing functionality.
 
-The [`RPA.Robocloud.Secrets`](https://robocorp.com/docs/libraries/rpa-framework/rpa-robocloud-secrets) library handles fetching the email credentials in a secure way.
+The [`RPA.Robocorp.Vault`](https://robocorp.com/docs/libraries/rpa-framework/rpa-robocorp-vault) library handles fetching the email credentials in a secure way.
 
 ## Configuration
 
@@ -177,11 +175,11 @@ Create a new file: `/Users/<username>/vault.json`
 
 ### Point `devdata/env.json` to your `vault.json` file
 
-```json
-{
-  "RPA_SECRET_MANAGER": "RPA.Robocloud.Secrets.FileSecrets",
-  "RPA_SECRET_FILE": "/Users/<username>/vault.json"
+```json{
+  "RPA_SECRET_MANAGER": "RPA.Robocorp.Vault.FileSecrets",
+  "RPA_SECRET_FILE": "/Users/username/vault.json"
 }
+
 ```
 
 ## I want to learn more!
